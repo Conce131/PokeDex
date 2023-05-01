@@ -1,10 +1,10 @@
 <template>
-  <div>
+  <div class="d-flex flex-row flex-wrap align-center justify-center pa-2">
     <v-card
       @click="showDialog(item)"
       v-for="(item, index) in pokeList"
       :key="index"
-      :class="{ 'bg-orange': true, 'm-2': true }"
+      class="ma-4 !important"
     >
       <v-card-title> {{ item.name }} </v-card-title>
       <img :src="imageSrc + (index + 1) + '.png'" alt="Pokemon" />

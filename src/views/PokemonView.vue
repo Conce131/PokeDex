@@ -1,15 +1,26 @@
 <template>
-  <div>
-    <h1>{{ pokemon.name }}</h1>
-    <p>Peso : {{ pokemon.weight }}</p>
-    <p>Habilidades:</p>
-    <ul>
-      <li v-for="items in abilities" :key="items">
-        {{ items.ability.name }}
-      </li>
-    </ul>
-    <img :src="imageSrc" alt="" />
-  </div>
+  <main class="flex justify-center">
+    <div
+      class="flex flex-wrap items-center justify-center mt-4 w-[25rem] h-[25rem] p-6 bg-emerald-50 border border-gray-200 rounded-lg shadow hover:bg-gray-100"
+    >
+      <div class="text-white text-[2rem] mr-2 bg-emerald-700 rounded-full p-2 w-16">#{{ id }}</div>
+      <h1 class="text-green-800 text-[2.5rem] mr-[5rem]">
+        {{ pokemon.name }}
+      </h1>
+      <img class="justify-center" :src="imageSrc" alt="" />
+      <div class="shrink-0 mr-auto bg-emerald-300 w-full rounded-3xl p-4">
+        <ul>
+          <p class="text-green-700">Habilidades:</p>
+          <li class="pl-4 text-green-600" v-for="items in abilities" :key="items">
+            {{ items.ability.name }}
+          </li>
+          <li>
+            <p class="py-2 text-green-700">Peso : {{ pokemon.weight }}</p>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </main>
 </template>
 <script>
 import { useRoute } from 'vue-router'
@@ -33,7 +44,7 @@ export default {
       console.log(abilities.value)
     })
 
-    return { pokemon, imageSrc, abilities }
+    return { pokemon, imageSrc, abilities, id }
   }
 }
 </script>
