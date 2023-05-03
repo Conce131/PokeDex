@@ -5,15 +5,26 @@ import HelloWorld from './components/HelloWorld.vue'
 
 <template>
   <header class="">
-    <img alt="Pokedex logo" class="w-[25rem]" src="@/assets/PokeDex.png" />
-
+    <div class="flex justify-center bg-[#34495E]">
+      <img
+        alt="Pokedex logo"
+        class="w-[27rem] rounded-tl-lg rounded bg-emerald-600"
+        src="@/assets/PokeDex.png"
+      />
+    </div>
     <div class="wrapper">
       <HelloWorld msg="You did it!" />
 
-      <nav class="bg-pink-600">
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-        <RouterLink to="/another">Another</RouterLink>
+      <nav class="bg-emerald-600 py-2">
+        <RouterLink class="px-6 hover:bg-emerald-800 hover:rounded-full hover:py-1" to="/"
+          >Home</RouterLink
+        >
+        <RouterLink class="px-6 hover:bg-emerald-800 hover:rounded-full hover:py-1" to="/about"
+          >About</RouterLink
+        >
+        <RouterLink class="px-6 hover:bg-emerald-800 hover:rounded-full hover:py-1" to="/another"
+          >Another</RouterLink
+        >
       </nav>
     </div>
   </header>
