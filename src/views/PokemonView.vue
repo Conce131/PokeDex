@@ -13,7 +13,7 @@
       </h1>
 
       <!-- <p :v-if="types[1].type.name">{{ types[1].type.name }}</p> -->
-      <img class="justify-center" :src="imageSrc" alt="" />
+      <img class="justify-center" :src="imageSrc" alt="" loading="lazy" />
       <div class="flex justify-center bg-green rounded-full w-[4rem]">
         <!-- <img
           class="w-6 h-6"

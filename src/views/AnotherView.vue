@@ -15,7 +15,7 @@
         <RouterLink :to="'/pokemon/' + selectedPokemon.id">
           <v-card-title>{{ selectedPokemon.name }}</v-card-title>
         </RouterLink>
-        <img :src="selectedPokemon.image" />
+        <img :src="selectedPokemon.image" loading="lazy" />
 
         <v-card-text>{{ selectedPokemon.description }}</v-card-text>
         <v-card-actions>
