@@ -14,14 +14,24 @@
 
       <!-- <p :v-if="types[1].type.name">{{ types[1].type.name }}</p> -->
       <img class="justify-center" :src="imageSrc" alt="" loading="lazy" />
+
       <div class="flex justify-center bg-green rounded-full w-[4rem]">
         <!-- <img
           class="w-6 h-6"
           src="https://archives.bulbagarden.net/media/upload/7/79/Bug_icon.png"
           alt=""
         /> -->
+
         <p>{{ type1 }}</p>
         <p :v-if="type2 == ''">{{ type2 }}</p>
+      </div>
+
+      <div v-for="(Description, index) in pokeDescription" :key="index">
+        <p
+          v-if="Description.language.name === 'es' && Description.version.name === 'alpha-sapphire'"
+        >
+          {{ Description.flavor_text }}
+        </p>
       </div>
       <div class="shrink-0 mr-auto bg-emerald-300 w-full rounded-3xl p-4">
         <ul>
@@ -46,6 +56,8 @@ export default {
   setup() {
     const route = useRoute()
     const pokemon = ref([])
+    const species = ref([])
+    const pokeDescription = ref([])
     const id = route.params.id
     const imageSrc =
       'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/' +
@@ -56,16 +68,20 @@ export default {
     const type2 = ref('')
 
     onMounted(async () => {
-      const response = await getResponse(`https://pokeapi.co/api/v2/pokemon/${id}`)
-      pokemon.value = response
-      abilities.value = response.abilities
-      type1.value = response.types[0].type.name
-      type2.value = response.types[1].type.name
+      const pokeResponse = await getResponse(`https://pokeapi.co/api/v2/pokemon/${id}`)
+      const speciesResponse = await getResponse(`https://pokeapi.co/api/v2/pokemon-species/${id}`)
+      species.value = speciesResponse
+      pokeDescription.value = speciesResponse.flavor_text_entries
+      console.log(pokeDescription)
+      pokemon.value = pokeResponse
+      abilities.value = pokeResponse.abilities
+      type1.value = pokeResponse.types[0].type.name
+      type2.value = pokeResponse.types[1].type.name
 
       console.log(type1.value)
     })
 
-    return { pokemon, imageSrc, abilities, id, type1, type2 }
+    return { pokemon, imageSrc, abilities, id, type1, type2, pokeDescription }
   }
 }
 </script>
