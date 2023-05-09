@@ -1,7 +1,7 @@
 <template>
   <main class="flex justify-center">
     <div
-      class="flex flex-wrap items-center justify-center mt-4 w-[30rem] h-[30rem] p-6 bg-emerald-50 border border-gray-200 rounded-lg shadow hover:bg-gray-100"
+      class="flex flex-wrap items-center justify-center mt-4 w-[30rem] h-[35rem] p-6 bg-emerald-50 border border-gray-200 rounded-lg shadow hover:bg-gray-100"
     >
       <div
         class="flex justify-center items-center text-white text-[1.5rem] w-[4rem] h-[4rem] mr-2 bg-emerald-700 rounded-full p-2 w-16"
@@ -15,15 +15,15 @@
       <!-- <p :v-if="types[1].type.name">{{ types[1].type.name }}</p> -->
       <img class="justify-center" :src="imageSrc" alt="" loading="lazy" />
 
-      <div class="flex justify-center bg-green rounded-full w-[4rem]">
+      <div class="flex text-center">
         <!-- <img
           class="w-6 h-6"
           src="https://archives.bulbagarden.net/media/upload/7/79/Bug_icon.png"
           alt=""
         /> -->
 
-        <p>{{ type1 }}</p>
-        <p :v-if="type2 == ''">{{ type2 }}</p>
+        <p class="bg-green rounded-full w-[4rem]">{{ type1 }}</p>
+        <p :v-if="type2 == ''" class="ml-2 bg-red rounded-full w-[4rem]">{{ type2 }}</p>
       </div>
 
       <div v-for="(Description, index) in pokeDescription" :key="index">
