@@ -1,7 +1,7 @@
 <template>
   <main class="flex justify-center">
     <div
-      class="flex flex-wrap items-center justify-center mt-4 w-[30rem] h-[40rem] p-6 py-0 bg-emerald-50 border border-gray-200 rounded-lg shadow hover:bg-gray-100"
+      class="flex flex-wrap items-center justify-center mt-4 w-[30rem] p-6 py-0 bg-emerald-50 border border-gray-200 rounded-lg shadow hover:bg-gray-100"
     >
       <div class="flex flex-shrink-1 w-full place-self-stretch">
         <button
@@ -27,7 +27,7 @@
       </h1>
 
       <!-- <p :v-if="types[1].type.name">{{ types[1].type.name }}</p> -->
-      <img class="justify-center" :src="imageSrc" alt="" loading="lazy" />
+      <img class="h-6 w-6justify-center" :src="imageSrc" alt="" loading="lazy" />
 
       <div class="flex text-center">
         <!-- <img
@@ -36,7 +36,7 @@
           alt=""
         /> -->
         <!--  -->
-        <p :id="type1" class="rounded-full w-[4rem]">
+        <p :id="type1" class="rounded-full w-[4rem] h-[10rem]">
           {{ type1 }}
         </p>
         <div :v-if="type2">
