@@ -21,9 +21,13 @@
           src="https://archives.bulbagarden.net/media/upload/7/79/Bug_icon.png"
           alt=""
         /> -->
-
-        <p class="bg-green rounded-full w-[4rem]">{{ type1 }}</p>
-        <p :v-if="type2 == ''" class="ml-2 bg-red rounded-full w-[4rem]">{{ type2 }}</p>
+        <!--  -->
+        <p :id="type1" class="rounded-full w-[4rem]">
+          {{ type1 }}
+        </p>
+        <div :v-if="type2">
+          <p :id="type2" class="ml-2 rounded-full w-[4rem]">{{ type2 }}</p>
+        </div>
       </div>
 
       <div v-for="(Description, index) in pokeDescription" :key="index">
@@ -49,7 +53,7 @@
 </template>
 <script>
 import { useRoute } from 'vue-router'
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import getResponse from '../modules/api'
 
 export default {
@@ -72,16 +76,13 @@ export default {
       const speciesResponse = await getResponse(`https://pokeapi.co/api/v2/pokemon-species/${id}`)
       species.value = speciesResponse
       pokeDescription.value = speciesResponse.flavor_text_entries
-      console.log(pokeDescription)
       pokemon.value = pokeResponse
       abilities.value = pokeResponse.abilities
       type1.value = pokeResponse.types[0].type.name
-      type2.value = pokeResponse.types[1].type.name
-
-      console.log(type1.value)
+      type2.value = pokeResponse.types[1] ? pokeResponse.types[1].type.name : ''
     })
-
-    return { pokemon, imageSrc, abilities, id, type1, type2, pokeDescription }
+    const BgType = computed(() => `bg-${type1.value}`)
+    return { pokemon, imageSrc, abilities, id, type1, type2, pokeDescription, BgType }
   }
 }
 </script>
@@ -90,5 +91,60 @@ export default {
 img {
   width: 200px;
   height: 150px;
+}
+
+#grass {
+  background-color: theme('colors.grass');
+}
+#fire {
+  background-color: theme('colors.fire');
+}
+#normal {
+  background-color: theme('colors.normal');
+}
+#water {
+  background-color: theme('colors.water');
+}
+#electric {
+  background-color: theme('colors.electric');
+}
+#ice {
+  background-color: theme('colors.ice');
+}
+#fighting {
+  background-color: theme('colors.fighting');
+}
+#poison {
+  background-color: theme('colors.poison');
+}
+#ground {
+  background-color: theme('colors.ground');
+}
+#flying {
+  background-color: theme('colors.flying');
+}
+#psychic {
+  background-color: theme('colors.psychic');
+}
+#bug {
+  background-color: theme('colors.bug');
+}
+#rock {
+  background-color: theme('colors.rock');
+}
+#ghost {
+  background-color: theme('colors.ghost');
+}
+#dragon {
+  background-color: theme('colors.dragon');
+}
+#dark {
+  background-color: theme('colors.dark');
+}
+#steel {
+  background-color: theme('colors.steel');
+}
+#fairy {
+  background-color: theme('colors.fairy');
 }
 </style>
