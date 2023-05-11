@@ -8,7 +8,7 @@
           class="h-[3rem] transition-all duration-500 active:border-8 active:text-base w-50 hover:text-xl bg-emerald-800 text-green-200 hover:text-green-800 hover:bg-emerald-200 hover:border-x-4 hover:border-y-4 border-4 border-solid hover:border-solid border-emerald-800 rounded-l"
           @click="goToPreviousPokemon"
         >
-          previous
+          Previous
         </button>
         <button
           class="h-[3rem] transition-all duration-500 active:border-8 active:text-base w-50 hover:text-xl bg-emerald-800 text-green-200 hover:text-green-800 hover:bg-emerald-200 hover:border-x-4 hover:border-y-4 border-4 border-solid hover:border-solid border-emerald-800 rounded-r"
@@ -122,7 +122,8 @@ export default {
       type2,
       pokeDescription,
       BgType,
-      goToPreviousPokemon
+      goToPreviousPokemon,
+      goToNextPokemon
     }
   }
 }
