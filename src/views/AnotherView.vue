@@ -6,14 +6,18 @@
       :key="index"
       class="ma-4 !important"
     >
-      <v-card-title> {{ item.name }} </v-card-title>
+      <v-card-title>
+        <p class="capitalize">{{ item.name }}</p>
+      </v-card-title>
       <img :src="imageSrc + (index + 1) + '.png'" alt="Pokemon" />
       <v-card-text> Contenido de la tarjeta </v-card-text>
     </v-card>
-    <v-dialog v-model="dialogVisible">
-      <v-card>
+    <v-dialog v-model="dialogVisible" class="items-center">
+      <v-card class="w-[15rem]">
         <RouterLink :to="'/pokemon/' + selectedPokemon.id">
-          <v-card-title>{{ selectedPokemon.name }}</v-card-title>
+          <v-card-title class="capitalize">
+            <p class="capitalize">{{ selectedPokemon.name }}</p>
+          </v-card-title>
         </RouterLink>
         <img :src="selectedPokemon.image" loading="lazy" />
 

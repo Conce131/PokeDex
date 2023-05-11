@@ -1,14 +1,28 @@
 <template>
   <main class="flex justify-center">
     <div
-      class="flex flex-wrap items-center justify-center mt-4 w-[30rem] h-[35rem] p-6 bg-emerald-50 border border-gray-200 rounded-lg shadow hover:bg-gray-100"
+      class="flex flex-wrap items-center justify-center mt-4 w-[30rem] h-[40rem] p-6 py-0 bg-emerald-50 border border-gray-200 rounded-lg shadow hover:bg-gray-100"
     >
+      <div class="flex flex-shrink-1 w-full place-self-stretch">
+        <button
+          class="h-[3rem] transition-all duration-500 active:border-8 active:text-base w-50 hover:text-xl bg-emerald-800 text-green-200 hover:text-green-800 hover:bg-emerald-200 hover:border-x-4 hover:border-y-4 border-4 border-solid hover:border-solid border-emerald-800 rounded-l"
+          @click="goToPreviousPokemon"
+        >
+          previous
+        </button>
+        <button
+          class="h-[3rem] transition-all duration-500 active:border-8 active:text-base w-50 hover:text-xl bg-emerald-800 text-green-200 hover:text-green-800 hover:bg-emerald-200 hover:border-x-4 hover:border-y-4 border-4 border-solid hover:border-solid border-emerald-800 rounded-r"
+          @click="goToNextPokemon"
+        >
+          Next
+        </button>
+      </div>
       <div
         class="flex justify-center items-center text-white text-[1.5rem] w-[4rem] h-[4rem] mr-2 bg-emerald-700 rounded-full p-2 w-16"
       >
         #{{ id }}
       </div>
-      <h1 class="text-green-800 text-[2.5rem] mr-[5rem]">
+      <h1 class="text-green-800 text-[2.5rem] mr-[5rem] capitalize">
         {{ pokemon.name }}
       </h1>
 
@@ -52,37 +66,64 @@
   </main>
 </template>
 <script>
-import { useRoute } from 'vue-router'
-import { ref, onMounted, computed } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { ref, onMounted, computed, watch } from 'vue'
 import getResponse from '../modules/api'
 
 export default {
   setup() {
     const route = useRoute()
+    const router = useRouter()
     const pokemon = ref([])
     const species = ref([])
     const pokeDescription = ref([])
-    const id = route.params.id
-    const imageSrc =
-      'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/' +
-      id +
-      '.png'
+    let id = ref(route.params.id)
+    const imageSrc = ref(
+      `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id.value}.png`
+    )
     const abilities = ref([])
     const type1 = ref('')
     const type2 = ref('')
 
-    onMounted(async () => {
-      const pokeResponse = await getResponse(`https://pokeapi.co/api/v2/pokemon/${id}`)
-      const speciesResponse = await getResponse(`https://pokeapi.co/api/v2/pokemon-species/${id}`)
+    const goToNextPokemon = () => {
+      id.value = id.value === 1010 ? 1 : parseInt(id.value) + 1
+      router.replace(`/pokemon/${id.value}`)
+    }
+    const goToPreviousPokemon = () => {
+      id.value = id.value <= 1 ? 1010 : parseInt(id.value) - 1
+      router.replace(`/pokemon/${id.value}`)
+    }
+
+    const fetchData = async () => {
+      const pokeResponse = await getResponse(`https://pokeapi.co/api/v2/pokemon/${id.value}`)
+      const speciesResponse = await getResponse(
+        `https://pokeapi.co/api/v2/pokemon-species/${id.value}`
+      )
       species.value = speciesResponse
       pokeDescription.value = speciesResponse.flavor_text_entries
       pokemon.value = pokeResponse
       abilities.value = pokeResponse.abilities
       type1.value = pokeResponse.types[0].type.name
       type2.value = pokeResponse.types[1] ? pokeResponse.types[1].type.name : ''
-    })
+      imageSrc.value = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id.value}.png`
+    }
+
+    onMounted(fetchData)
+
+    watch(id, fetchData)
+
     const BgType = computed(() => `bg-${type1.value}`)
-    return { pokemon, imageSrc, abilities, id, type1, type2, pokeDescription, BgType }
+    return {
+      pokemon,
+      imageSrc,
+      abilities,
+      id,
+      type1,
+      type2,
+      pokeDescription,
+      BgType,
+      goToPreviousPokemon
+    }
   }
 }
 </script>
