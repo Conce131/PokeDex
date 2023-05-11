@@ -27,7 +27,7 @@
       </h1>
 
       <!-- <p :v-if="types[1].type.name">{{ types[1].type.name }}</p> -->
-      <img class="h-6 w-6justify-center" :src="imageSrc" alt="" loading="lazy" />
+      <img class="w-6justify-center" :src="imageSrc" alt="" loading="lazy" />
 
       <div class="flex text-center">
         <!-- <img
@@ -36,7 +36,7 @@
           alt=""
         /> -->
         <!--  -->
-        <p :id="type1" class="rounded-full w-[4rem] h-[10rem]">
+        <p :id="type1" class="rounded-full w-[4rem]">
           {{ type1 }}
         </p>
         <div :v-if="type2">
