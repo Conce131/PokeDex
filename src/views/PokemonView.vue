@@ -1,17 +1,17 @@
 <template>
   <main class="flex justify-center">
     <div
-      class="flex flex-wrap items-center justify-center mt-4 w-[30rem] p-6 py-0 bg-emerald-50 border border-gray-200 rounded-lg shadow hover:bg-gray-100"
+      class="flex flex-wrap items-center justify-center mt-4 mb-10 w-[30rem] p-6 py-0 bg-emerald-50 border border-gray-200 rounded-lg shadow hover:bg-gray-100"
     >
-      <div class="flex flex-shrink-1 w-full place-self-stretch">
+      <div class="-mx-6 flex flex-shrink-1 w-[30rem] self-start">
         <button
-          class="h-[3rem] transition-all duration-500 active:border-8 active:text-base w-50 hover:text-xl bg-emerald-800 text-green-200 hover:text-green-800 hover:bg-emerald-200 hover:border-x-4 hover:border-y-4 border-4 border-solid hover:border-solid border-emerald-800 rounded-l"
+          class="h-[3rem] transition-all duration-500 active:border-8 active:text-base w-50 hover:text-xl bg-emerald-800 text-green-200 hover:text-green-800 hover:bg-emerald-200 hover:border-x-4 hover:border-y-4 border-4 border-solid hover:border-solid border-emerald-800 rounded-tl-lg"
           @click="goToPreviousPokemon"
         >
           Previous
         </button>
         <button
-          class="h-[3rem] transition-all duration-500 active:border-8 active:text-base w-50 hover:text-xl bg-emerald-800 text-green-200 hover:text-green-800 hover:bg-emerald-200 hover:border-x-4 hover:border-y-4 border-4 border-solid hover:border-solid border-emerald-800 rounded-r"
+          class="h-[3rem] transition-all duration-500 active:border-8 active:text-base w-50 hover:text-xl bg-emerald-800 text-green-200 hover:text-green-800 hover:bg-emerald-200 hover:border-x-4 hover:border-y-4 border-4 border-solid hover:border-solid border-emerald-800 rounded-tr-lg"
           @click="goToNextPokemon"
         >
           Next
