@@ -12,10 +12,11 @@
       <img :src="imageSrc + (index + 1) + '.png'" alt="Pokemon" />
       <v-card-text> {{ item.types }} {{ type2 }} </v-card-text>
     </v-card>
-    <v-dialog v-model="dialogVisible" class="items-center">
-      <v-card class="w-[15rem]">
-        <v-card-title class="capitalize">
+    <v-dialog v-model="dialogVisible" width="auto">
+      <v-card class="flex items-center">
+        <v-card-title class="flex flex-wrap capitalize">
           <p class="capitalize">{{ selectedPokemon.name }}</p>
+          <v-btn @click="dialogVisible = false">X</v-btn>
         </v-card-title>
 
         <img :src="selectedPokemon.image" loading="lazy" />
@@ -29,9 +30,7 @@
         </v-card-text>
 
         <RouterLink :to="'/pokemon/' + selectedPokemon.id"> Mas informacion</RouterLink>
-        <v-card-actions>
-          <v-btn @click="dialogVisible = false">X</v-btn>
-        </v-card-actions>
+        <v-card-actions> </v-card-actions>
       </v-card>
     </v-dialog>
   </div>
