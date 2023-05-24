@@ -51,6 +51,8 @@
           {{ Description.flavor_text }}
         </p>
       </div>
+      <poke-chart v-if="pokemon.stats" :pokemonStats="pokemon.stats" :key="pokemon" />
+
       <div class="shrink-0 mr-auto bg-emerald-300 w-full rounded-3xl p-4">
         <ul>
           <p class="text-green-700">Habilidades:</p>
@@ -69,8 +71,12 @@
 import { useRoute, useRouter } from 'vue-router'
 import { ref, onMounted, computed, watch } from 'vue'
 import getResponse from '../modules/api'
+import PokeChart from '@/components/PokeChart.vue'
 
 export default {
+  components: {
+    PokeChart
+  },
   setup() {
     const route = useRoute()
     const router = useRouter()
