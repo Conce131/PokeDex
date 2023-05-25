@@ -1,9 +1,9 @@
 <template>
   <main class="flex justify-center">
     <div
-      class="flex flex-wrap items-center justify-center mt-4 mb-10 w-[45rem] p-6 py-0 bg-emerald-50 border border-gray-200 rounded-lg shadow hover:bg-gray-100"
+      class="flex flex-wrap items-center justify-center mt-4 mb-10 w-[55rem] py-0 pb-6 bg-emerald-50 border border-gray-200 rounded-lg shadow hover:bg-gray-100"
     >
-      <div class="-mx-6 flex flex-shrink-1 w-[30rem] self-start">
+      <div class="flex flex-shrink-1 w-full self-start">
         <button
           class="h-[3rem] transition-all duration-500 active:border-8 active:text-base w-50 hover:text-xl bg-emerald-800 text-green-200 hover:text-green-800 hover:bg-emerald-200 hover:border-x-4 hover:border-y-4 border-4 border-solid hover:border-solid border-emerald-800 rounded-tl-lg"
           @click="goToPreviousPokemon"
@@ -17,7 +17,7 @@
           Next
         </button>
       </div>
-      <div class="flex mt-4">
+      <div class="flex mt-4 w-full justify-center">
         <div
           class="flex justify-center items-center text-white text-[1.5rem] w-[4rem] h-[4rem] mr-2 bg-emerald-700 rounded-full p-2 w-16"
         >
@@ -28,40 +28,23 @@
         </h1>
       </div>
 
-      <!-- <p :v-if="types[1].type.name">{{ types[1].type.name }}</p> -->
-      <img class="w-[30rem] h-[35rem] justify-center" :src="imageSrc" alt="" loading="lazy" />
-
-      <div class="flex text-center">
-        <!-- <img
-          class="w-6 h-6"
-          src="https://archives.bulbagarden.net/media/upload/7/79/Bug_icon.png"
-          alt=""
-        /> -->
-        <!--  -->
-        <p :id="type1" class="rounded-full w-[4rem]">
-          {{ type1 }}
-        </p>
-        <div :v-if="type2">
-          <p :id="type2" class="ml-2 rounded-full w-[4rem]">{{ type2 }}</p>
-        </div>
-      </div>
-
-      <div v-for="(Description, index) in pokeDescription" :key="index">
-        <p
-          v-if="Description.language.name === 'es' && Description.version.name === 'alpha-sapphire'"
-        >
-          {{ Description.flavor_text }}
-        </p>
-      </div>
-      <poke-chart
-        class="border-solid border-emerald-800 border-4 rounded-3x1"
-        v-if="pokemon.stats"
-        :pokemonStats="pokemon.stats"
-        :key="pokemon"
-      />
-
-      <div class="shrink-0 mr-auto bg-emerald-300 w-full rounded-3xl p-4">
+      <img class="w-[25rem] h-[30rem] ml-6 justify-center" :src="imageSrc" alt="" loading="lazy" />
+      <div
+        class="shrink-0 p-auto bg-emerald-200 w-[26rem] rounded-3xl p-4 border-2 border-emerald-800 mx-4"
+      >
         <ul>
+          <li>
+            <div v-for="(Description, index) in pokeDescription" :key="index">
+              <p
+                v-if="
+                  Description.language.name === 'es' &&
+                  Description.version.name === 'alpha-sapphire'
+                "
+              >
+                {{ Description.flavor_text }}
+              </p>
+            </div>
+          </li>
           <p class="text-green-700">Habilidades:</p>
           <li class="pl-4 text-green-600" v-for="items in abilities" :key="items">
             {{ items.ability.name }}
@@ -70,6 +53,27 @@
             <p class="py-2 text-green-700">Peso : {{ pokemon.weight }}</p>
           </li>
         </ul>
+      </div>
+      <div class="w-96 ml-4">
+        <p>Tipos:</p>
+        <div class="flex text-center">
+          <p :id="type1" class="rounded-full w-[5rem]">
+            {{ type1 }}
+          </p>
+          <div :v-if="type2">
+            <p :id="type2" class="mr-2 rounded-full w-[5rem]">{{ type2 }}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="w-96 ml-4 rounded-3xl p-4 border-2 border-emerald-800 rounded-3x1">
+        <p class="text-green-700">Estadísticas base:</p>
+        <poke-chart
+          class="w-ful"
+          v-if="pokemon.stats"
+          :pokemonStats="pokemon.stats"
+          :key="pokemon"
+        />
       </div>
     </div>
   </main>
