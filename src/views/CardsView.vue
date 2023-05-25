@@ -37,13 +37,10 @@
 </template>
 
 <script type="module">
-<<<<<<< HEAD
 import { useRoute } from 'vue-router'
 
 import { ref, onMounted, watch } from 'vue'
-=======
 import PokeChart from '@/components/PokeChart.vue'
->>>>>>> 6daacc7e9b9b58c1f728c7561ef949e0f32a4d56
 import getResponse from '../modules/api.js'
 import axios from 'axios'
 import { split } from 'postcss/lib/list'
