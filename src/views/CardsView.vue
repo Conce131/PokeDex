@@ -2,15 +2,15 @@
   <div class="d-flex flex-row flex-wrap align-center justify-center pa-2">
     <v-card
       @click="showDialog(item)"
-      v-for="(item, index) in pokeList"
-      :key="index"
+      v-for="item in pokeList"
+      :key="item.id"
       class="ma-4 !important"
     >
       <v-card-title>
         <p class="capitalize">{{ item.name }}</p>
       </v-card-title>
-      <img :src="imageSrc + (index + 1) + '.png'" alt="Pokemon" />
-      <v-card-text> {{ item.types }} {{ type2 }} </v-card-text>
+      <img :src="imageSrc + item.id + '.png'" alt="Pokemon" loading="lazy" />
+      <v-card-text> {{ item.types }} </v-card-text>
     </v-card>
     <v-dialog v-model="dialogVisible">
       <v-card class="flex items-center">
@@ -37,34 +37,55 @@
 </template>
 
 <script type="module">
+import { useRoute } from 'vue-router'
+
+import { ref, onMounted, watch } from 'vue'
 import PokeChart from '@/components/PokeChart.vue'
-import { ref, onMounted } from 'vue'
 import getResponse from '../modules/api.js'
 import axios from 'axios'
+import { split } from 'postcss/lib/list'
 export default {
   components: {
     PokeChart
   },
   setup() {
+    const route = useRoute()
+    let region = ref(route.params.region)
     const pokeList = ref([])
     const imageSrc =
       'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/'
     const selectedPokemon = ref(null)
     const dialogVisible = ref(false)
+    console.log(region)
 
-    onMounted(async () => {
-      const response = await getResponse(`https://pokeapi.co/api/v2/pokemon?limit=151`)
+    const fetchData = async () => {
+      let url = ''
+      if (region.value === 'Kanto') {
+        url = `https://pokeapi.co/api/v2/pokemon?limit=151`
+      } else if (region.value === 'Hoen') {
+        url = `https://pokeapi.co/api/v2/pokemon?limit=100&offset=151`
+      }
+      const response = await getResponse(url)
       console.log(response)
-      response.results.forEach((pokemon, index) => {
+      pokeList.value = []
+      response.results.forEach((pokemon) => {
         pokeList.value.push({
-          id: index + 1,
+          id: split(pokemon.url, '/')
+            .filter((part) => !!part)
+            .pop(),
           name: pokemon.name,
           type1: pokemon.types,
           url: pokemon.url
         })
       })
-      console.log(pokeList)
+    }
+    onMounted(fetchData)
+
+    watch(() => {
+      region.value = route.params.region
+      fetchData()
     })
+
     async function showDialog(pokemon) {
       const response = await axios.get(pokemon.url)
       selectedPokemon.value = response.data
@@ -78,6 +99,7 @@ export default {
     }
 
     return {
+      region,
       pokeList,
       imageSrc,
       selectedPokemon,
