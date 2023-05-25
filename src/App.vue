@@ -19,8 +19,13 @@ import { RouterLink, RouterView } from 'vue-router'
         <RouterLink class="px-6 hover:bg-emerald-800 hover:rounded-full hover:py-1" to="/about"
           >About</RouterLink
         >
-        <RouterLink class="px-6 hover:bg-emerald-800 hover:rounded-full hover:py-1" to="/cards"
+        <RouterLink
+          class="px-6 hover:bg-emerald-800 hover:rounded-full hover:py-1"
+          to="/cards/Kanto"
           >Kanto</RouterLink
+        >
+        <RouterLink class="px-6 hover:bg-emerald-800 hover:rounded-full hover:py-1" to="/cards/Hoen"
+          >Hoen</RouterLink
         >
       </nav>
     </div>

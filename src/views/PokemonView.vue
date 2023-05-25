@@ -78,6 +78,7 @@ export default {
     const species = ref([])
     const pokeDescription = ref([])
     let id = ref(route.params.id)
+    console.log(id)
     const imageSrc = ref(
       `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id.value}.png`
     )
