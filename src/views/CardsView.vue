@@ -12,7 +12,7 @@
       <img :src="imageSrc + item.id + '.png'" alt="Pokemon" loading="lazy" />
       <v-card-text> {{ item.types }} </v-card-text>
     </v-card>
-    <v-dialog v-model="dialogVisible" width="auto">
+    <v-dialog v-model="dialogVisible">
       <v-card class="flex items-center">
         <v-card-title class="flex flex-wrap capitalize">
           <p class="capitalize">{{ selectedPokemon.name }}</p>
@@ -28,7 +28,7 @@
             {{ selectedPokemon.type2 }}
           </p>
         </v-card-text>
-
+        <poke-chart v-if="selectedPokemon.stats" :pokemonStats="selectedPokemon.stats" />
         <RouterLink :to="'/pokemon/' + selectedPokemon.id"> Mas informacion</RouterLink>
         <v-card-actions> </v-card-actions>
       </v-card>
@@ -37,13 +37,20 @@
 </template>
 
 <script type="module">
+<<<<<<< HEAD
 import { useRoute } from 'vue-router'
 
 import { ref, onMounted, watch } from 'vue'
+=======
+import PokeChart from '@/components/PokeChart.vue'
+>>>>>>> 6daacc7e9b9b58c1f728c7561ef949e0f32a4d56
 import getResponse from '../modules/api.js'
 import axios from 'axios'
 import { split } from 'postcss/lib/list'
 export default {
+  components: {
+    PokeChart
+  },
   setup() {
     const route = useRoute()
     let region = ref(route.params.region)

@@ -1,7 +1,7 @@
 <template>
   <main class="flex justify-center">
     <div
-      class="flex flex-wrap items-center justify-center mt-4 mb-10 w-[30rem] p-6 py-0 bg-emerald-50 border border-gray-200 rounded-lg shadow hover:bg-gray-100"
+      class="flex flex-wrap items-center justify-center mt-4 mb-10 w-[45rem] p-6 py-0 bg-emerald-50 border border-gray-200 rounded-lg shadow hover:bg-gray-100"
     >
       <div class="-mx-6 flex flex-shrink-1 w-[30rem] self-start">
         <button
@@ -17,17 +17,19 @@
           Next
         </button>
       </div>
-      <div
-        class="flex justify-center items-center text-white text-[1.5rem] w-[4rem] h-[4rem] mr-2 bg-emerald-700 rounded-full p-2 w-16"
-      >
-        #{{ id }}
+      <div class="flex mt-4">
+        <div
+          class="flex justify-center items-center text-white text-[1.5rem] w-[4rem] h-[4rem] mr-2 bg-emerald-700 rounded-full p-2 w-16"
+        >
+          #{{ id }}
+        </div>
+        <h1 class="text-green-800 text-[2.5rem] mr-[5rem] capitalize">
+          {{ pokemon.name }}
+        </h1>
       </div>
-      <h1 class="text-green-800 text-[2.5rem] mr-[5rem] capitalize">
-        {{ pokemon.name }}
-      </h1>
 
       <!-- <p :v-if="types[1].type.name">{{ types[1].type.name }}</p> -->
-      <img class="w-6justify-center" :src="imageSrc" alt="" loading="lazy" />
+      <img class="w-[30rem] h-[35rem] justify-center" :src="imageSrc" alt="" loading="lazy" />
 
       <div class="flex text-center">
         <!-- <img
@@ -51,6 +53,13 @@
           {{ Description.flavor_text }}
         </p>
       </div>
+      <poke-chart
+        class="border-solid border-emerald-800 border-4 rounded-3x1"
+        v-if="pokemon.stats"
+        :pokemonStats="pokemon.stats"
+        :key="pokemon"
+      />
+
       <div class="shrink-0 mr-auto bg-emerald-300 w-full rounded-3xl p-4">
         <ul>
           <p class="text-green-700">Habilidades:</p>
@@ -69,8 +78,12 @@
 import { useRoute, useRouter } from 'vue-router'
 import { ref, onMounted, computed, watch } from 'vue'
 import getResponse from '../modules/api'
+import PokeChart from '@/components/PokeChart.vue'
 
 export default {
+  components: {
+    PokeChart
+  },
   setup() {
     const route = useRoute()
     const router = useRouter()
