@@ -64,6 +64,11 @@
             <p :id="type2" class="mr-2 rounded-full w-[5rem]">{{ type2 }}</p>
           </div>
         </div>
+        <p>Debil contra:</p>
+        <div>
+          <p>aqui van los tipos</p>
+          <poke-type :type1="type1" :type2="type2 ? type2 : null" :key="pokemon"></poke-type>
+        </div>
       </div>
 
       <div class="w-96 ml-4 rounded-3xl p-4 border-2 border-emerald-800 rounded-3x1">
@@ -83,10 +88,12 @@ import { useRoute, useRouter } from 'vue-router'
 import { ref, onMounted, computed, watch } from 'vue'
 import getResponse from '../modules/api'
 import PokeChart from '@/components/PokeChart.vue'
+import PokeType from '@/components/PokeType.vue'
 
 export default {
   components: {
-    PokeChart
+    PokeChart,
+    PokeType
   },
   setup() {
     const route = useRoute()
