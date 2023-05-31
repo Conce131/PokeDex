@@ -30,7 +30,7 @@
 
       <img class="w-[25rem] h-[30rem] ml-6 justify-center" :src="imageSrc" alt="" loading="lazy" />
       <div
-        class="shrink-0 p-auto bg-emerald-200 w-[26rem] rounded-3xl p-4 border-2 border-emerald-800 mx-4"
+        class="shrink-0 p-auto bg-emerald-200 w-[25rem] rounded-3xl p-4 border-2 border-emerald-800 mx-4"
       >
         <ul>
           <li>
@@ -54,24 +54,23 @@
           </li>
         </ul>
       </div>
-      <div class="w-96 ml-4">
+      <div class="w-[25rem] ml-4">
         <p>Tipos:</p>
         <div class="flex text-center">
-          <p :id="type1" class="rounded-full w-[5rem]">
+          <p :id="type1" class="rounded-full w-[5rem] m-2">
             {{ type1 }}
           </p>
           <div :v-if="type2">
-            <p :id="type2" class="mr-2 rounded-full w-[5rem]">{{ type2 }}</p>
+            <p :id="type2" class="mr-2 rounded-full w-[5rem] m-2">{{ type2 }}</p>
           </div>
         </div>
         <p>Debil contra:</p>
         <div>
-          <p>aqui van los tipos</p>
           <poke-type :type1="type1" :type2="type2 ? type2 : null" :key="pokemon"></poke-type>
         </div>
       </div>
 
-      <div class="w-96 ml-4 rounded-3xl p-4 border-2 border-emerald-800 rounded-3x1">
+      <div class="w-[25rem] ml-4 rounded-3xl p-4 border-2 border-emerald-800 rounded-3x1">
         <p class="text-green-700">Estadísticas base:</p>
         <poke-chart
           class="w-ful"
