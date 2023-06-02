@@ -63,7 +63,7 @@ export default {
       if (region.value === 'Kanto') {
         url = `https://pokeapi.co/api/v2/pokemon?limit=151`
       } else if (region.value === 'Hoen') {
-        url = `https://pokeapi.co/api/v2/pokemon?limit=100&offset=151`
+        url = `https://pokeapi.co/api/v2/pokemon?limit=135&offset=251`
       }
       const response = await getResponse(url)
       console.log(response)

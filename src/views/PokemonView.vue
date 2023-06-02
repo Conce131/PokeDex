@@ -79,6 +79,8 @@
           :key="pokemon"
         />
       </div>
+
+      <poke-evolution :species="species" :key="species"></poke-evolution>
     </div>
   </main>
 </template>
@@ -88,11 +90,13 @@ import { ref, onMounted, computed, watch } from 'vue'
 import getResponse from '../modules/api'
 import PokeChart from '@/components/PokeChart.vue'
 import PokeType from '@/components/PokeType.vue'
+import PokeEvolution from '@/components/PokeEvolution.vue'
 
 export default {
   components: {
     PokeChart,
-    PokeType
+    PokeType,
+    PokeEvolution
   },
   setup() {
     const route = useRoute()
@@ -146,6 +150,7 @@ export default {
       type2,
       pokeDescription,
       BgType,
+      species,
       goToPreviousPokemon,
       goToNextPokemon
     }
