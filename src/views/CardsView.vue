@@ -1,10 +1,11 @@
 <template>
   <div class="d-flex flex-row flex-wrap align-center justify-center pa-2">
     <v-card
+      id="card"
       @click="showDialog(item)"
       v-for="item in pokeList"
       :key="item.id"
-      class="ma-4 !important"
+      class="ma-4 !important hover:-translate-y-2"
     >
       <v-card-title>
         <p class="capitalize">{{ item.name }}</p>
