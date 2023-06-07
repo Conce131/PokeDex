@@ -1,7 +1,7 @@
 <template>
   <main class="flex justify-center">
     <div
-      class="flex flex-wrap items-center justify-center mt-4 mb-10 w-[55rem] py-0 pb-6 bg-emerald-50 border border-gray-200 rounded-lg shadow hover:bg-gray-100"
+      class="flex flex-wrap items-center justify-center mt-4 mb-10 w-[55rem] min-h-[90rem] py-0 pb-6 bg-emerald-50 border border-gray-200 rounded-lg shadow hover:bg-gray-100"
     >
       <div class="flex flex-shrink-1 w-full self-start">
         <button
@@ -86,7 +86,7 @@
 </template>
 <script>
 import { useRoute, useRouter } from 'vue-router'
-import { ref, onMounted, computed, watch } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 import getResponse from '../modules/api'
 import PokeChart from '@/components/PokeChart.vue'
 import PokeType from '@/components/PokeType.vue'
@@ -137,10 +137,16 @@ export default {
     }
 
     onMounted(fetchData)
+    watch(
+      () => route.params.id,
+      () => {
+        ;(id.value = id.value === 1011 ? router.replace(`/pokemon/1`) : route.params.id),
+          fetchData()
+        console.log(id.value)
+      },
+      { immediate: true }
+    )
 
-    watch(id, fetchData)
-
-    const BgType = computed(() => `bg-${type1.value}`)
     return {
       pokemon,
       imageSrc,
@@ -149,7 +155,6 @@ export default {
       type1,
       type2,
       pokeDescription,
-      BgType,
       species,
       goToPreviousPokemon,
       goToNextPokemon

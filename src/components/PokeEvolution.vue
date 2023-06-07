@@ -6,7 +6,7 @@
       <div
         class="flex align-center border-emerald-800 border-8 rounded-full w-[13rem] h-[13rem] bg-emerald-50 hover:bg-gray-100"
       >
-        <img id="evo" :src="evo1Img" />
+        <img id="evo" :src="evo1Img" @click="goToEvo(evo1Id)" />
       </div>
       {{ evo1 }}
     </div>
@@ -15,7 +15,7 @@
         class="flex align-center border-emerald-800 border-8 rounded-full w-[13rem] h-[13rem] bg-emerald-50 hover:bg-gray-100"
         v-if="evo2"
       >
-        <img id="evo" :src="evo2Img" />
+        <img id="evo" :src="evo2Img" @click="goToEvo(evo2Id)" />
       </div>
       {{ evo2 }}
     </div>
@@ -24,7 +24,7 @@
         class="flex align-center border-emerald-800 border-8 rounded-full w-[13rem] h-[13rem] bg-emerald-50 hover:bg-gray-100 justify-center"
         v-if="evo3"
       >
-        <img id="evo" :src="evo3Img" />
+        <img id="evo" :src="evo3Img" @click="goToEvo(evo3Id)" />
       </div>
       {{ evo3 }}
     </div>
@@ -34,9 +34,11 @@
 <script>
 import { ref, onMounted } from 'vue'
 import getResponse from '../modules/api'
+import { useRouter } from 'vue-router'
 export default {
   props: ['species'],
   setup(props) {
+    const router = useRouter()
     const evo = ref({})
     const species = ref([props.species])
     const evoChain = ref([])
@@ -56,21 +58,21 @@ export default {
       console.log(chainResponse)
       evoChain.value = chainResponse
       evo1.value = chainResponse.chain.species.name
-      evo2.value = chainResponse.chain.evolves_to[0].species.name
-        ? chainResponse.chain.evolves_to[0].species.name
-        : null
-      evo3.value =
-        chainResponse.chain.evolves_to[0].evolves_to[0] !== undefined
-          ? chainResponse.chain.evolves_to[0].evolves_to[0].species.name
+      evo2.value =
+        chainResponse.chain.evolves_to[0] !== undefined
+          ? chainResponse.chain.evolves_to[0].species.name
           : null
+      if (evo2.value && chainResponse.chain.evolves_to[0].evolves_to[0]) {
+        evo3.value = chainResponse.chain.evolves_to[0].evolves_to[0].species.name
+      } else {
+        evo3.value = null
+      }
       const getNumberUrl = (url) => {
         const parts = url.split('/')
         return parts[parts.length - 2]
       }
       evo1Id.value = getNumberUrl(chainResponse.chain.species.url)
-      evo2Id.value = chainResponse.chain.evolves_to[0].species.name
-        ? getNumberUrl(chainResponse.chain.evolves_to[0].species.url)
-        : null
+      evo2Id.value = evo2.value ? getNumberUrl(chainResponse.chain.evolves_to[0].species.url) : null
 
       evo3Id.value = evo3.value
         ? getNumberUrl(chainResponse.chain.evolves_to[0].evolves_to[0].species.url)
@@ -82,9 +84,13 @@ export default {
       evo2Img.value = evo2.value
         ? `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${evo2Id.value}.png`
         : null
-      evo3Img.value = chainResponse.chain.evolves_to[0].evolves_to[0].species.name
+      evo3Img.value = evo3.value
         ? `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${evo3Id.value}.png`
         : null
+    }
+    const goToEvo = (id) => {
+      router.replace(`/pokemon/${id}`)
+      console.log(id)
     }
     onMounted(fetchEvoData)
     return {
@@ -94,7 +100,11 @@ export default {
       evo3,
       evo1Img,
       evo2Img,
-      evo3Img
+      evo3Img,
+      evo1Id,
+      evo2Id,
+      evo3Id,
+      goToEvo
     }
   }
 }
