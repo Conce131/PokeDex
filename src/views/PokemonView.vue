@@ -1,7 +1,7 @@
 <template>
   <main class="flex justify-center">
     <div
-      class="flex flex-wrap items-center justify-center mt-4 mb-10 w-[55rem] min-h-[90rem] py-0 pb-6 bg-emerald-50 border border-gray-200 rounded-lg shadow hover:bg-gray-100"
+      class="flex flex-wrap items-center justify-center mt-4 mb-10 w-[55rem] min-h-[85rem] py-0 pb-6 bg-emerald-50 border border-gray-200 rounded-lg shadow hover:bg-gray-100"
     >
       <div class="flex flex-shrink-1 w-full self-start">
         <button

@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex flex-row flex-wrap align-center justify-center pa-2">
+  <div class="min-h-screen d-flex flex-row flex-wrap align-center justify-center pa-2">
     <v-card
       id="card"
       @click="showDialog(item)"

@@ -2,31 +2,25 @@
   <div
     class="flex flex-row space-x-6 my-6 py-6 bg-emerald-400 bg-[url('./assets/body_bg.png')] bg-repeat w-[95%] justify-center rounded-3xl"
   >
-    <div>
-      <div
-        class="flex align-center border-emerald-800 border-8 rounded-full w-[13rem] h-[13rem] bg-emerald-50 hover:bg-gray-100"
-      >
-        <img id="evo" :src="evo1Img" @click="goToEvo(evo1Id)" />
+    <div class="flex flex-wrap justify-center" v-for="level in evolutions" :key="level.level">
+      <div v-if="level.level > 0" class="shrink-0 flex align-center h-[100%]">></div>
+      <div class="p-2 max-h-[15rem]" v-for="evolution in level.evolutions" :key="evolution.id">
+        <div class="flex shrink-1 flex-col items-center">
+          <div
+            class="flex shrink align-center border-emerald-800 border-8 rounded-full w-[13rem] h-[13rem] bg-emerald-50 hover:bg-gray-100 justify-center"
+          >
+            <img
+              id="evo"
+              class="cursor-pointer shrink max-w-[11wm] max-h-[11wm]"
+              :src="evolution.image"
+              @click="goToEvo(evolution.id)"
+            />
+          </div>
+          <div class="overflow-hidden text-center">
+            {{ evolution.name }}
+          </div>
+        </div>
       </div>
-      {{ evo1 }}
-    </div>
-    <div>
-      <div
-        class="flex align-center border-emerald-800 border-8 rounded-full w-[13rem] h-[13rem] bg-emerald-50 hover:bg-gray-100"
-        v-if="evo2"
-      >
-        <img id="evo" :src="evo2Img" @click="goToEvo(evo2Id)" />
-      </div>
-      {{ evo2 }}
-    </div>
-    <div>
-      <div
-        class="flex align-center border-emerald-800 border-8 rounded-full w-[13rem] h-[13rem] bg-emerald-50 hover:bg-gray-100 justify-center"
-        v-if="evo3"
-      >
-        <img id="evo" :src="evo3Img" @click="goToEvo(evo3Id)" />
-      </div>
-      {{ evo3 }}
     </div>
   </div>
 </template>
@@ -35,75 +29,58 @@
 import { ref, onMounted } from 'vue'
 import getResponse from '../modules/api'
 import { useRouter } from 'vue-router'
+
 export default {
   props: ['species'],
   setup(props) {
     const router = useRouter()
-    const evo = ref({})
-    const species = ref([props.species])
-    const evoChain = ref([])
-    const evo1 = ref('')
-    const evo2 = ref('')
-    const evo3 = ref('')
-    const evo1Id = ref('')
-    const evo2Id = ref('')
-    const evo3Id = ref('')
-    const evo1Img = ref('')
-    const evo2Img = ref('')
-    const evo3Img = ref('')
-    // https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id.value}.png
-    console.log(species)
+    const evolutions = ref([])
+
     const fetchEvoData = async () => {
       const chainResponse = await getResponse(props.species.evolution_chain.url)
-      console.log(chainResponse)
-      evoChain.value = chainResponse
-      evo1.value = chainResponse.chain.species.name
-      evo2.value =
-        chainResponse.chain.evolves_to[0] !== undefined
-          ? chainResponse.chain.evolves_to[0].species.name
-          : null
-      if (evo2.value && chainResponse.chain.evolves_to[0].evolves_to[0]) {
-        evo3.value = chainResponse.chain.evolves_to[0].evolves_to[0].species.name
-      } else {
-        evo3.value = null
-      }
+      const chain = chainResponse.chain
+
       const getNumberUrl = (url) => {
         const parts = url.split('/')
         return parts[parts.length - 2]
       }
-      evo1Id.value = getNumberUrl(chainResponse.chain.species.url)
-      evo2Id.value = evo2.value ? getNumberUrl(chainResponse.chain.evolves_to[0].species.url) : null
 
-      evo3Id.value = evo3.value
-        ? getNumberUrl(chainResponse.chain.evolves_to[0].evolves_to[0].species.url)
-        : null
-      console.log(evo1Id.value)
-      console.log(evo2Id.value)
-      console.log(evo3Id.value)
-      evo1Img.value = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${evo1Id.value}.png`
-      evo2Img.value = evo2.value
-        ? `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${evo2Id.value}.png`
-        : null
-      evo3Img.value = evo3.value
-        ? `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${evo3Id.value}.png`
-        : null
+      const getEvolutionData = (evolution) => {
+        const id = getNumberUrl(evolution.species.url)
+        const image = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`
+        return { id, name: evolution.species.name, image }
+      }
+
+      const evolutionsData = []
+
+      const processEvolutionChain = (evolution, level) => {
+        if (!evolutionsData[level]) {
+          evolutionsData[level] = { level: level, evolutions: [] }
+        }
+
+        const evolutionData = getEvolutionData(evolution)
+        evolutionsData[level].evolutions.push(evolutionData)
+
+        if (evolution.evolves_to.length > 0) {
+          for (const nestedEvolution of evolution.evolves_to) {
+            processEvolutionChain(nestedEvolution, level + 1)
+          }
+        }
+      }
+      processEvolutionChain(chain, 0)
+
+      evolutions.value = evolutionsData
+      console.log(evolutions.value)
     }
+
     const goToEvo = (id) => {
       router.replace(`/pokemon/${id}`)
-      console.log(id)
     }
+
     onMounted(fetchEvoData)
+
     return {
-      evo,
-      evo1,
-      evo2,
-      evo3,
-      evo1Img,
-      evo2Img,
-      evo3Img,
-      evo1Id,
-      evo2Id,
-      evo3Id,
+      evolutions,
       goToEvo
     }
   }
